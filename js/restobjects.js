@@ -344,19 +344,19 @@ var dietDisplay = function() {
 	if($('.dietSelect').val() === 'vegan'){
 		$('.dietIndicator').remove();
 		if(($('.addItem').data('vegan')) === "no") {
-			$(this).parent().siblings('.menuContainer').find('div[data-vegan="{vegan}"]').children('.itemName').prepend('<span class="dietIndicator"> v</span>');
+			$(this).parent().siblings('.menuContainer').find('div[data-vegan="{vegan}"]').children('.itemName').after('<span class="dietIndicator"> v</span>');
 		}
 	}
 	else if($('.dietSelect').val() === 'gluten'){
 		$('.dietIndicator').remove();
 		if(($('.addItem').data('gluten')) === "no") {
-			$(this).parent().siblings('.menuContainer').find('div[data-gluten="{gluten}"]').children('.itemName').prepend('<span class="dietIndicator"> g</span>');
+			$(this).parent().siblings('.menuContainer').find('div[data-gluten="{gluten}"]').children('.itemName').after('<span class="dietIndicator"> g</span>');
 		}
 	}
 	else if($('.dietSelect').val() === 'citrus'){
 		$('.dietIndicator').remove();
 		if(($('.addItem').data('citrus')) === "{citrus}") {
-			$(this).parent().siblings('.menuContainer').find('div[data-citrus="{citrus}"]').children('.itemName').prepend('<span class="dietIndicator"> c</span>');
+			$(this).parent().siblings('.menuContainer').find('div[data-citrus="{citrus}"]').children('.itemName').after('<span class="dietIndicator"> c</span>');
 		}
 	}
 	else {
