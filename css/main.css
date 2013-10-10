@@ -1,7 +1,16 @@
 .mainHeader {
+	padding-top: 10px;
 	color:firebrick;
 	text-shadow: 0px 0px 10px white;
-	margin-left: 25%;
+	margin-left: 20%;
+	font-size: 3em;
+}
+
+h2 {
+	color:green;
+	text-align: center;
+	border: thick double black;
+
 }
 
 .titleBar {
@@ -25,14 +34,29 @@
 }
 
 .menuList, .drinkList {
+	border-style: groove;
+	border-radius: 10px;
 	padding:10px;
-	background-color: red;
+	background-color: #E81712;
 	margin:25px;
 	color:white;
 	height:200px;
 	width: 200px;
 	float: left;
-	-webkit-transition: all 0.2s ease-in-out
+	-webkit-transition: all 0.2s ease-in-out;
+}
+
+.dietIndicator {
+	position: relative;
+	top:-40px;
+	height:1.25em;
+	width:1.25em;
+	text-align: center;
+	float: right;
+	font-family: fantasy;
+	font-size: 1.25em;
+	border-radius: 1.25em;
+	background-color: green;
 }
 
 .itemName {
@@ -45,6 +69,7 @@
 }
 
 .currentOrder {
+	padding:5px;
 	position:fixed;
 	min-width:20%;
 	right:0px;
@@ -65,6 +90,7 @@ h3 {
 .menuList:hover, .drinkList:hover {
 	box-shadow: 0px 0px 20px black;
 	cursor: pointer;
+	-webkit-transform: rotateZ(2deg);
 	-webkit-transition: all 0.2s ease-in-out;
 }
 
@@ -88,8 +114,7 @@ h3 {
 
 .background-box {
 	position: absolute;
-	background-color: black;
-	opacity: .9;
+	background-color: rgba(0,0,0,0.9);
 	top: 0%;
     left: 0%;
     width: 100%;
@@ -135,14 +160,50 @@ h3 {
 	background-color:black;
 }
 
+.currentOrderItemPrice {
+	display: inline;
+	float: right;
+	clear:right;
+	-webkit-transition: all 0.2s ease-in-out;
+}
+
+.currentOrderItemName {
+	float: left;
+	display: inline;
+	clear:left;
+	-webkit-transition: all 0.2s ease-in-out;
+}
+
+.dietChoice {
+	padding-top: 20px;
+	padding-bottom: 100px;
+	clear:both;
+}
+
+.currentOrderItemName:hover, .currentOrderItemPrice:hover {
+	cursor: pointer;
+	color:white;
+	-webkit-transition: all 0.2s ease-in-out;
+
+}
 
 
 
+@media only screen and (min-width : 320px) and (max-width : 1000px) {
+	.mainHeader {
+		font-size: 2em;
+	}
+}
 
-
-
-
-
+@media only screen and (min-width : 320px) and (max-width : 680px) {
+	.mainHeader {
+		font-size: 1.25em;
+		margin-left: 0;
+	}
+	.addItem {
+		margin-left: 0PX;
+	}
+}
 
 
 
