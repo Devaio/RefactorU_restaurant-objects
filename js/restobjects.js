@@ -24,12 +24,12 @@ var FoodItem = function(name, cal, veg, gluFree, citFree) {
 };
 
 FoodItem.prototype.create = function() {
-	var item =  $('<div class="foodIngredient">{name}</div>'.supplant(this));
-	$('.menuItem').append(item);
+	var item =  ['.foodIngredient', '{name}'.supplant(this)];;
+		$('.menuItem').append(Creatable.create(item));
 };
 
 FoodItem.prototype.toString = function() {
-	return '\n' + this.name + '\nCalories: ' + this.calories// + '\nVegan: ' + this.vegan + '\nGluten Free: ' + this.gluten + '\nCitrus Free: ' + this.citrus;
+	return '\n' + this.name + '\nCalories: ' + this.calories
 };
 
 //@param name                string
@@ -71,8 +71,8 @@ Drink.prototype.isCitrusFree = function() {
 };
 
 Drink.prototype.create = function() {
-	var item =  $('<div class="drinkItem">{name}</div>'.supplant(this));
-	$('.drinkList').append(item);
+	var item =  ['.drinkItem', '{name}'.supplant(this)];
+		$('.drinkList').append(Creatable.create(item));
 };
 
 //@param name                string
@@ -130,8 +130,8 @@ Plate.prototype.isCitrusFree = function() {
 };	
 
 Plate.prototype.create = function() {
-	var item =  $('<div class="menuItem">{name}</div>'.supplant(this));
-	$('.menuList').append(item);
+	var item =  ['.menuItem', '{name}'.supplant(this)];
+		$('.menuList').append(Creatable.create(item));
 };
 
 //@param plates              array
@@ -144,8 +144,8 @@ Order.prototype.toString = function() {
 };
 
 Order.prototype.create = function() {
-	var item =  $('<div class="order">{0}</div>'.supplant(this));
-	$('.currentOrder').append(item);
+	var item =  ['.order', '{0}'.supplant(this)];
+		$('.currentOrder').append(Creatable.create(item));
 };
 
 //@param plates              array
@@ -159,8 +159,18 @@ Menu.prototype.toString = function(){
 
 Menu.prototype.create = function() {
 	for(var i=0; i<(this.plates).length; i++){
-		var item =  $('<div data-vegan="{vegan}" data-gluten="{gluten}" data-citrus="{citrus}" class="addItem menuList"><p class="price">{price}</p><p class="itemName">{name}</p><p class="description">{description}</p></div>'.supplant(this.plates[i]));
-		$('.menuContainer').append(item);
+	var menuCreate = ['.addItem.menuList', 
+		{
+		'data-vegan': '{vegan}'.supplant(this.plates[i]),
+		'data-gluten': '{gluten}'.supplant(this.plates[i]),
+		'data-citrus': '{citrus}'.supplant(this.plates[i]) 
+		},
+		[
+		['p.price', '{price}'.supplant(this.plates[i])],
+		['p.itemName', '{name}'.supplant(this.plates[i])],
+		['p.description', '{description}'.supplant(this.plates[i])]
+		]];
+			$('.menuContainer').append(Creatable.create(menuCreate));
 	}
 };
 
@@ -175,8 +185,12 @@ DrinkMenu.prototype.toString = function(){
 
 DrinkMenu.prototype.create = function() {
 	for(var i=0; i<(this.drinks).length; i++){
-		var item =  $('<div class="addItem drinkList"><p class="price">{price}</p><p class="itemName">{name}</p><p class="description">{description}</p></div>'.supplant(this.drinks[i]));
-		$('.drinkContainer').append(item);
+		var drinkCreate = ['.addItem.drinkList', 
+		[['p.price', '{price}'.supplant(this.drinks[i])],
+		['p.itemName', '{name}'.supplant(this.drinks[i])],
+		['p.description', '{description}'.supplant(this.drinks[i])]
+		]];
+			$('.drinkContainer').append(Creatable.create(drinkCreate));
 	}
 };
 
@@ -194,8 +208,11 @@ Restaurant.prototype.toString = function(){
 };
 
 Restaurant.prototype.create = function() {
-	var item =  $('<div class="titleBar"><h1 class="mainHeader">{name}</h1></div>'.supplant(this));
-	$('body').prepend(item);
+	// var item =  $('<div class="titleBar"><h1 class="mainHeader">{name}</h1></div>'.supplant(this));
+		var item = ['.titleBar', [
+		['h1.mainHeader', '{name}'.supplant(this)]
+		]];
+	$('body').prepend(Creatable.create(item));
 };
 
 //@param dietary Preference  string
@@ -206,6 +223,7 @@ var Customer = function(dietaryPreference){
 ////
 ///Items!
 //
+//Instantiating FoodItems
 var tortilla = new FoodItem('Tortilla', 200, true, false, true);
 var chicken = new FoodItem('Chicken', 180, false, true, true);
 var orange =  new FoodItem('Orange', 50, true, true, false);
@@ -221,26 +239,24 @@ var rice =  new FoodItem('Rice', 180, true, true, true);
 var pork = new FoodItem('Pork', 180, false, true, true);
 var lime =  new FoodItem('Lime', 10, true, true, false);
 
-
-
-var menuItems = [tortilla,rice,beans,chicken,pork,peppers,onions,avocado,garlic,lime,cherry,orange,tequila,whiskey];
-
-var margarita = new Drink('Margarita', 'a tequila and lime drink', 4.50, [tequila, lime]);
+//Instantiating Drinks
+var margarita = new Drink('Margarita', 'a Mexican classic made with tequila and lime', 4.50, [tequila, lime]);
 margarita.isVegan();
 margarita.isCitrusFree();
 margarita.isGlutenFree();
 
-var tequilaSun = new Drink('Tequila Sunrise', 'a tequila, orange, and cherry drink', 4.50, [tequila, orange, cherry])
+var tequilaSun = new Drink('Tequila Sunrise', 'tequila with orange and cherry', 4.50, [tequila, orange, cherry])
 tequilaSun.isVegan();
 tequilaSun.isCitrusFree();
 tequilaSun.isGlutenFree();
 
-var whiskeyOldFash = new Drink('Whiskey Old Fashioned', 'a classic drink', 6.50, [whiskey, cherry, orange]);
+var whiskeyOldFash = new Drink('Whiskey Old Fashioned', 'whiskey with muddled cherry and orange', 6.00, [whiskey, cherry, orange]);
 whiskeyOldFash.isVegan();
 whiskeyOldFash.isCitrusFree();
 whiskeyOldFash.isGlutenFree();
 
-var burrito = new Plate('Burrito', 'a delicious Mexican dish', 8, [tortilla, chicken, rice, beans]);
+//Instantiating Plates
+var burrito = new Plate('Burrito', 'a delicious Mexican dish made with chicken, rice, and beans', 8, [tortilla, chicken, rice, beans]);
 burrito.isVegan();
 burrito.isCitrusFree();
 burrito.isGlutenFree();
@@ -270,17 +286,15 @@ tortillaSoup.isVegan();
 tortillaSoup.isCitrusFree();
 tortillaSoup.isGlutenFree();
 
+// Instantiating Menus and Restaurant
 var drinkMenu = new DrinkMenu ([whiskeyOldFash, margarita, tequilaSun]);
 var restaurantMenu = new Menu([burrito, guacamole, fajitas, carnitas, pollo, tortillaSoup]);
-
 var restaurantName = new Restaurant('Yalcin\'s Burrito Dojo', 'a Mexican experience', restaurantMenu);
-
 
 //Initializing the UI
 restaurantName.create();
 restaurantMenu.create();
 drinkMenu.create();
-
 
 //Ordering Items from menu
 var totalPrice = 0;
@@ -290,36 +304,39 @@ var addOrderItemPrice;
 $(document).on('click', '.addItem', function(){
 	var OrderItemName = $(this).children('.itemName').text();
 	addOrderItemName = $(this).children('.itemName').text();
-	// console.log(addOrderItemName);
+
 	var OrderItemPrice = $(this).children('.price').text();
 	addOrderItemPrice = $(this).children('.price').text();
-	// console.log(addOrderItemPrice);
+
 	$('.orderConfirm').append('Would you like to add ' + OrderItemName + ' to your order?');
 	$('.lightbox').show();
 });
 
+//Updating Current Order
 var priceUpdate = function() {
 	$('.currentOrderTotal').remove();
-	$('.orderTotal').append($('<p class="currentOrderTotal">Order Total: ' + totalPrice + '</p>'));
+	var createTotalPrice = ['p.currentOrderTotal', ('Order Total: ' + totalPrice)]
+		$('.orderTotal').append(Creatable.create(createTotalPrice))
 }
 
 var orderUpdate = function() {
 	$('.lightbox').hide();
 	$('.orderConfirm').text('');
-	$('.currentOrder').append($('<p class="currentOrderItemName">' + addOrderItemName + '</p><p class="currentOrderItemPrice">' + addOrderItemPrice + '</p>'));
+	var createOrderUpdate = [[
+	['p.currentOrderItemName', addOrderItemName],
+	['p.currentOrderItemPrice', addOrderItemPrice]
+	]]
+		$('.currentOrder').append(Creatable.create(createOrderUpdate))
 }
-
 
 $(document).on('click', '.confirm-button', function(){
 	orderUpdate();
 	totalPrice += Number(addOrderItemPrice);
 	priceUpdate();
-	// console.log(totalPrice);
 });
 
 $(document).on('click', '.cancel-button', function(){
 	orderUpdate();
-	// console.log(totalPrice);
 	$('.currentOrder').children().last('p').remove();
 	$('.currentOrder').children().last('p').remove();
 });
@@ -328,16 +345,10 @@ $(document).on('click', '.currentOrderItemName', function(){
 	var priceDelete = $(this).next('.currentOrderItemPrice').text();
 	totalPrice -= Number(priceDelete)
 	priceUpdate();
-	// console.log(totalPrice)
 	$(this).next('.currentOrderItemPrice').remove();
 	$(this).remove();
 
 });
-
-$(document).on('click', '.addItem', function (){
-	console.log($('.addItem').data())
-})
-
 
 //Filtering based on diet - need to add filtering functionality
 var dietDisplay = function() {
